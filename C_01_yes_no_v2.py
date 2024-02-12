@@ -36,5 +36,3 @@ if first_time == "yes":
     instructions()
 elif first_time == "no":
     pass
-else:
-    print("<ERROR> Please answer yes / no")
