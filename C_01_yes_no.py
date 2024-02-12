@@ -58,17 +58,3 @@ elif first_time == "no":
     pass
 else:
     print("<ERROR> Please answer yes / no")
-
-
-# Loop to allow multiple calculations per session - Unmodified recycled code
-keep_going = ""
-while keep_going == "":
-    # Ask the user for the file type
-    data_type = user_choice()
-    print()
-    print("You chose", data_type)
-    print()
-
-    print()
-    keep_going = input("Press <enter> to continue or any key to quit ")
-    print()
