@@ -9,3 +9,11 @@ def not_blank(question):
             print("Enter a name")
         else:
             return response
+
+
+while True:
+    name = not_blank("Enter your name or 'xxx' to quit ")
+    if name == "xxx":
+        break
+
+print("We are done")

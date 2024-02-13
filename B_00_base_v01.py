@@ -18,6 +18,19 @@ def yes_no(question):
             print("<ERROR> Please enter yes/no")
 
 
+# checks that user response is not blank
+def not_blank(question):
+
+    while True:
+        response = input(question)
+
+        # if the response if blank, outputs error
+        if response == "":
+            print("Enter a name")
+        else:
+            return response
+
+
 # Puts series of symbols at start and end of text (for emphasis)
 def statement_generator(text, decoration):
 
@@ -66,7 +79,7 @@ tickets_sold = 0
 # Loop to sell tickets
 while tickets_sold < MAX_TICKETS:
     print()
-    name = input("Please enter your name or 'xxx' to quit ")
+    name = not_blank("Enter your name or 'xxx' to quit ")
 
     if name == 'xxx':
         break
