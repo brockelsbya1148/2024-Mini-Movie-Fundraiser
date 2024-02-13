@@ -31,6 +31,19 @@ def not_blank(question):
             return response
 
 
+# checks users enter an integer to a given question
+def num_check(question):
+
+    while True:
+
+        try:
+            response = int(input(question))
+            return response
+
+        except ValueError:
+            print("Please enter a number")
+
+
 # Puts series of symbols at start and end of text (for emphasis)
 def statement_generator(text, decoration):
 
@@ -84,8 +97,19 @@ while tickets_sold < MAX_TICKETS:
     if name == 'xxx':
         break
 
+    age = num_check("Age: ")
+
+    if 21 <= age <= 120:
+        pass
+    elif age < 12:
+        print("Your too young for this movie, go kick rocks loser")
+        continue
     else:
-        tickets_sold += 1
+        print("Too old for this movie, move along grandpa")
+        continue
+
+    tickets_sold += 1
+
 # Output number of tickets sold
 if tickets_sold == 3:
     print()
