@@ -24,9 +24,9 @@ def not_blank(question):
     while True:
         response = input(question)
 
-        # if the response if blank, outputs error
+        # if the response is blank, outputs error
         if response == "":
-            print("Enter a name")
+            print("Your name can't be blank")
         else:
             return response
 
@@ -42,6 +42,21 @@ def num_check(question):
 
         except ValueError:
             print("Please enter a number")
+
+
+# Calculate the ticket price based on the age
+def calc_ticket_price(var_age):
+
+    if var_age < 16:
+        price = 7.50
+
+    elif var_age < 65:
+        price = 10.50
+
+    else:
+        price = 6.50
+
+    return price
 
 
 # Puts series of symbols at start and end of text (for emphasis)
@@ -99,7 +114,7 @@ while tickets_sold < MAX_TICKETS:
 
     age = num_check("Age: ")
 
-    if 21 <= age <= 120:
+    if 12 <= age <= 120:
         pass
     elif age < 12:
         print("Your too young for this movie, go kick rocks loser")
@@ -107,6 +122,10 @@ while tickets_sold < MAX_TICKETS:
     else:
         print("Too old for this movie, move along grandpa")
         continue
+
+    # Calculate ticket cost
+    ticket_cost = calc_ticket_price(age)
+    print("Ticket price: ${:.2f}".format(ticket_cost))
 
     tickets_sold += 1
 
