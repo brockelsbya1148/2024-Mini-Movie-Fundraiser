@@ -2,22 +2,6 @@ from time import sleep
 # Functions go here
 
 
-def yes_no(question):
-
-    while True:
-        response = input(question).lower()
-
-        if response == "yes" or response == "y":
-            print()
-            return "yes"
-
-        elif response == "no" or response == "n":
-            return "no"
-
-        else:
-            print("<ERROR> Please enter yes/no")
-
-
 # checks that user response is not blank
 def not_blank(question):
 
@@ -59,6 +43,29 @@ def calc_ticket_price(var_age):
     return price
 
 
+# checks that users enter a valid response (e.g. yes/ no
+# cash / credit) based on a list of options
+def string_checker(question, num_letters, valid_responses):
+
+    error = "PLease choose {} or {}".format(valid_responses[0], valid_responses[1])
+
+    if num_letters == 1:
+        short_version = 1
+
+    else:
+        short_version = 2
+
+    while True:
+
+        response = input(question).lower()
+
+        for item in valid_responses:
+            if response == item[:short_version] or response == item:
+                return item
+
+        print(error)
+
+
 # Puts series of symbols at start and end of text (for emphasis)
 def statement_generator(text, decoration):
 
@@ -89,20 +96,26 @@ def instructions():
 
 # Main Routine goes here
 
+
 # Heading
 statement_generator("Conversion Calculator for Weight, Distance & Time", "-")
-
-# Display instructions if user has not used the program before
-first_time = yes_no("Do you want to read the instructions? ").lower()
-
-if first_time == "yes":
-    instructions()
-elif first_time == "no":
-    pass
 
 # Set maximum number of tickets
 MAX_TICKETS = 3
 tickets_sold = 0
+
+yes_no_list = ["yes", "no"]
+payment_list = ["cash", "credit"]
+
+# Display instructions if user has not used the program before
+want_instructions = string_checker("Do you want to read the instructions (y/n): ", 1, yes_no_list)
+
+if want_instructions == "yes":
+    instructions()
+elif want_instructions == "no":
+    pass
+
+
 
 # Loop to sell tickets
 while tickets_sold < MAX_TICKETS:
@@ -125,7 +138,9 @@ while tickets_sold < MAX_TICKETS:
 
     # Calculate ticket cost
     ticket_cost = calc_ticket_price(age)
-    print("Ticket price: ${:.2f}".format(ticket_cost))
+
+    # Get payment method
+    pay_method = string_checker("Choose a payment method (Credit or cash): ", 2, payment_list)
 
     tickets_sold += 1
 
