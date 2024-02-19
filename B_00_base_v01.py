@@ -116,7 +116,6 @@ elif want_instructions == "no":
     pass
 
 
-
 # Loop to sell tickets
 while tickets_sold < MAX_TICKETS:
     print()
@@ -141,6 +140,7 @@ while tickets_sold < MAX_TICKETS:
 
     # Get payment method
     pay_method = string_checker("Choose a payment method (Credit or cash): ", 2, payment_list)
+    print(f"You paid with {pay_method}")
 
     tickets_sold += 1
 
