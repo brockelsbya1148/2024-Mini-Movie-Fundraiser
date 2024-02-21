@@ -1,4 +1,5 @@
 from time import sleep
+import pandas
 # Functions go here
 
 
@@ -60,6 +61,11 @@ def string_checker(question, num_letters, valid_responses):
         print(error)
 
 
+# Currency formatting function
+def currency(x):
+    return "${:.2f}".format(x)
+
+
 # Puts series of symbols at start and end of text (for emphasis)
 def statement_generator(text, decoration):
 
@@ -80,11 +86,11 @@ def statement_generator(text, decoration):
 def instructions():
 
     statement_generator("Instructions / Information", "=")
-    print("Please choose a unit to convert from and a unit to convert to")
+    print("Instructions Here")
     sleep(1)
-    print("This program converts measurements of time, mass, and distance")
+    print("Instructions Here")
     sleep(1)
-    print("Complete as many calculations as necessary, pressing <enter> at the end of each calculation or any key")
+    print("Instruction Here")
     return ""
 
 
@@ -95,11 +101,23 @@ def instructions():
 statement_generator("Conversion Calculator for Weight, Distance & Time", "-")
 
 # Set maximum number of tickets
-MAX_TICKETS = 3
+MAX_TICKETS = 5
 tickets_sold = 0
 
 yes_no_list = ["yes", "no"]
 payment_list = ["cash", "credit"]
+
+# Lists to hold ticket details
+all_names = []
+all_ticket_costs = []
+all_surcharge = []
+
+# Dictionary used to create data frame ie: column_name:list
+mini_movie_dict = {
+    "Name": all_names,
+    "Ticket Price": all_ticket_costs,
+    "Surcharge": all_surcharge
+}
 
 # Display instructions if user has not used the program before
 want_instructions = string_checker("Do you want to read the instructions (y/n): ", 1, yes_no_list)
@@ -136,10 +154,53 @@ while tickets_sold < MAX_TICKETS:
     pay_method = string_checker("Choose a payment method (Credit or cash): ", 2, payment_list)
     print(f"You paid with {pay_method}")
 
+    if pay_method == "cash":
+        surcharge = 0
+    else:
+        surcharge = ticket_cost * 0.05
+
     tickets_sold += 1
 
+    # Add ticket name, cost and surcharge to lists
+    all_names.append(name)
+    all_ticket_costs.append(ticket_cost)
+    all_surcharge.append(surcharge)
+
+# Create data frame from dictionary to organise information
+mini_movie_frame = pandas.DataFrame(mini_movie_dict)
+mini_movie_frame = mini_movie_frame.set_index('Name')
+
+# Calculate the total ticket cost (ticket + surcharge)
+mini_movie_frame['Total'] = mini_movie_frame['Surcharge'] \
+                            + mini_movie_frame['Ticket Price']
+
+# Calculate the profit (ticket - 5)
+mini_movie_frame['Profit'] = mini_movie_frame['Ticket Price'] - 5
+
+# Calculate ticket and profit totals
+total = mini_movie_frame['Total'].sum()
+profit = mini_movie_frame['Profit'].sum()
+
+# Currency Formatting (uses currency function
+add_dollars = ['Ticket Price', 'Surcharge', 'Total', 'Profit']
+for var_item in add_dollars:
+    mini_movie_frame[var_item] = mini_movie_frame[var_item].apply(currency)
+
+print("---- Ticket Data ----")
+print()
+
+# Output table with ticket data
+print(mini_movie_frame)
+
+print()
+print("----- Ticket Cost / Profit -----")
+
+# Output total ticket sales and profit
+print("Total Ticket Sales: ${:.2f}".format(total))
+print("Total Profit: ${:.2f}".format(profit))
+
 # Output number of tickets sold
-if tickets_sold == 3:
+if tickets_sold == MAX_TICKETS:
     print()
     print("Congratulations, you sold all the available tickets")
 else:
