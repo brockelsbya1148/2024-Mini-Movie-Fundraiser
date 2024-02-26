@@ -169,7 +169,6 @@ while tickets_sold < MAX_TICKETS:
 
 # Create data frame from dictionary to organise information
 mini_movie_frame = pandas.DataFrame(mini_movie_dict)
-# mini_movie_frame = mini_movie_frame.set_index('Name')
 
 # Calculate the total ticket cost (ticket + surcharge)
 mini_movie_frame['Total'] = mini_movie_frame['Surcharge'] \
@@ -200,6 +199,7 @@ statement_generator("Ticket Data", "-")
 print()
 
 # Output table with ticket data
+mini_movie_frame = mini_movie_frame.set_index('Name')
 print(mini_movie_frame)
 
 print()
