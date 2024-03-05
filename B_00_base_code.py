@@ -228,14 +228,18 @@ mini_movie_string = pandas.DataFrame.to_string(mini_movie_frame)
 
 # Create strings for printing
 ticket_cost_heading = "\n----- Ticket Cost / Profit -----"
-total_ticket_sales = "Total Ticket Sales: ${}".format(total)
-total_profit = "Total Profit : ${}".format(profit)
+total_ticket_sales = "Total Ticket Sales: ${:.2f}".format(total)
+total_profit = "Total Profit : ${:.2f}".format(profit)
 
-sales_status = "\n*** All the tickets have been sold ***"
+if tickets_sold == MAX_TICKETS:
+    sales_status = "\n*** All the tickets have been sold ***"
+else:
+    sales_status = "\n **** You have sold {} out of {} " \
+                   "tickets ****".format(tickets_sold, MAX_TICKETS)
 
 winner_heading = "\n---- Raffle Winner ----"
 winner_text = "The winner of the raffle is {}. " \
-              "They have won ${} ie: Their ticket is " \
+              "They have won ${:.2f} ie: Their ticket is " \
               "free!".format(winner_name, total_won)
 
 # List holding content to print / write to file
@@ -257,10 +261,3 @@ for item in to_write:
 
 # Close file
 text_file.close()
-
-# Output number of tickets sold
-if tickets_sold == MAX_TICKETS:
-    print("You sold all the available tickets")
-else:
-    print("You sold", tickets_sold, "ticket/s. There are", MAX_TICKETS - tickets_sold, "ticket/s remaining")
-sleep(2)
